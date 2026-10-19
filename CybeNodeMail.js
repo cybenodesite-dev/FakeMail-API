@@ -10,15 +10,15 @@ export class CybeNodeMail {
 
   async getDomains() {
     const res = await fetch(`${this.baseUrl}/domains`);
-    if (!res.ok) throw new Error("فشل جلب النطاقات من الخادم");
+    if (!res.ok) throw new Error("Failed to fetch domains");
     const data = await res.json();
     return data["hydra:member"] || data;
   }
 
   async createRandomAccount() {
     const domains = await this.getDomains();
-    if (!domains || domains.length === 0) throw new Error("لا توجد نطاقات متاحة");
-    
+    if (!domains || domains.length === 0) throw new Error("No domains available");
+
     const domain = typeof domains[0] === 'string' ? domains[0] : domains[0].domain;
     const prefix = "cli_" + Math.random().toString(36).substring(2, 8);
     const address = `${prefix}@${domain}`;
@@ -30,7 +30,7 @@ export class CybeNodeMail {
       body: JSON.stringify({ address, password }),
     });
 
-    if (!accRes.ok) throw new Error("فشل إنشاء الحساب البريدي");
+    if (!accRes.ok) throw new Error("Failed to create email account");
 
     const tokenRes = await fetch(`${this.baseUrl}/token`, {
       method: "POST",
@@ -47,11 +47,11 @@ export class CybeNodeMail {
   }
 
   async getMessages(token = this.token) {
-    if (!token) throw new Error("التوكين مفقود، يرجى إنشاء حساب أولاً");
+    if (!token) throw new Error("Token missing. Please create an account first.");
     const res = await fetch(`${this.baseUrl}/messages`, {
       headers: { Authorization: `Bearer ${token}` },
     });
-    if (!res.ok) throw new Error("تعذر جلب الرسائل من الخادم");
+    if (!res.ok) throw new Error("Failed to fetch messages");
     const data = await res.json();
     return data["hydra:member"] || data;
   }
