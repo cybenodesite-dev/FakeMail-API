@@ -1,19 +1,16 @@
 {
   "name": "cybenode-mail-cli",
   "version": "1.0.0",
-  "description": "Terminal CLI tool for CybeNode FakeMail API",
+  "description": "CybeNode Temp Mail Terminal CLI",
   "main": "cli.js",
   "type": "module",
-  "bin": {
-    "cybenode-mail": "./cli.js"
-  },
   "scripts": {
     "start": "node cli.js"
   },
   "dependencies": {
     "chalk": "^5.3.0",
     "cli-table3": "^0.6.3",
+    "node-fetch": "^3.3.2",
     "ora": "^8.0.1"
-  },
-  "keywords": ["cli", "temp-mail", "api", "cybenode", "terminal"]
+  }
 }
